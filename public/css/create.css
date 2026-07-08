@@ -1,0 +1,179 @@
+/* create.css — styles unique to the create-quiz view (owned by the create-view
+   agent). Reuses base.css shared primitives (.card, .btn, .opt-pill/.ring/.del,
+   .add-pill, .counter) and adds the create-only chrome: the purple "Question N"
+   card with its white question box + chevron swap chip, the swap MODAL, the
+   inline-editable option pills, and the post-create "share your link" panel. */
+
+.linkbox { display: flex; align-items: center; gap: 8px; background: #f6effc; border: 3px dashed #cdb8e6; border-radius: 16px; padding: 12px 14px; margin: 6px 0 4px; }
+.linkbox code { font-family: var(--body); font-weight: 700; color: var(--ink); font-size: .92rem; word-break: break-all; }
+
+/* ---- Purple "Question N" card (overrides the white base .card) ---- */
+.card.qcard {
+  background: linear-gradient(160deg, #c79cf0 0%, #b481ec 55%, #9f7bea 100%);
+  border: none;
+  color: #fff;
+}
+.q-head { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.q-num { font-family: var(--display); font-weight: 800; font-size: 1.25rem; color: #fff; text-shadow: 0 2px 8px rgba(70, 30, 120, .3); }
+.qcard .counter { color: rgba(255, 255, 255, .82); }
+
+/* White question box; holds the question text (or the custom input) and is the
+   positioning context for the chevron swap chip hanging off its bottom edge. */
+.qbox {
+  position: relative;
+  background: #fff; border-radius: 18px;
+  padding: 18px 18px 22px;
+  margin-bottom: 40px; /* room for the chip that hangs off the bottom-center edge */
+  box-shadow: 0 10px 22px -14px rgba(60, 25, 110, .5);
+}
+.qbox .qtext { margin: 0; }
+
+/* ---- Custom "write my own" question input (sits inside the white box) ---- */
+.q-input {
+  width: 100%; margin: 0;
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(1.2rem, 5.4vw, 1.55rem); line-height: 1.15; color: var(--ink);
+  padding: 10px 12px; border-radius: 12px;
+  border: 2px dashed #e6cff5; background: #fbf6ff; outline: none;
+  transition: border-color .15s, box-shadow .15s;
+}
+.q-input::placeholder { color: #c9aee0; }
+.q-input:focus { border-color: var(--pink); box-shadow: 0 0 0 4px rgba(255, 79, 163, .14); }
+
+/* ---- Swap chip: a round chevron tab hanging off the question box's edge ---- */
+.swap-wrap {
+  position: absolute; left: 50%; bottom: 0; transform: translate(-50%, 50%);
+  z-index: 25;
+}
+.swap-btn {
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  width: 44px; height: 44px; border-radius: 50%; border: none;
+  background: #ece0fb; color: #9a83cf;
+  font-family: var(--display); font-weight: 800; font-size: 1.5rem; line-height: 1;
+  display: grid; place-items: center;
+  box-shadow: 0 8px 18px -6px rgba(123, 82, 214, .5), inset 0 2px 3px rgba(255, 255, 255, .7);
+  transition: transform .16s cubic-bezier(.2, 1.2, .4, 1), background .14s, color .14s, box-shadow .16s;
+}
+.swap-btn > * { pointer-events: none; }
+.swap-btn:hover { background: #f3ecff; color: var(--lilac); transform: translateY(-3px); box-shadow: 0 12px 22px -6px rgba(123, 82, 214, .55), inset 0 2px 3px rgba(255, 255, 255, .7); }
+.swap-btn:active { transform: translateY(-1px); }
+.swap-btn[aria-expanded="true"] { background: #fff; color: var(--lilac); transform: translateY(-3px) rotate(180deg); box-shadow: 0 12px 22px -6px rgba(123, 82, 214, .6); }
+
+/* The swap MODAL is out-of-flow and can extend the page past the fold. If that
+   toggled a vertical scrollbar, body's width would shrink by the scrollbar width
+   and — since base.css paints the gradient on body at background-size:300% — the
+   whole background would visibly shift. base.css already sets html{overflow-y:
+   scroll}; keep a stable gutter here too so it never toggles. */
+html { scrollbar-gutter: stable; }
+
+/* ---- Swap MODAL: a full-screen dimmed sheet of question rows ----
+   The chip opens this instead of a dropdown, so it can never overlap the header.
+   Fixed overlay above everything; body scroll is NOT locked (that would change
+   body width) — the panel scrolls itself via overscroll-behavior:contain. */
+.swap-modal {
+  position: fixed; inset: 0; z-index: 200;
+  display: flex; align-items: flex-end; justify-content: center;
+}
+.swap-scrim {
+  position: absolute; inset: 0;
+  background: rgba(35, 15, 50, .55);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  opacity: 0; transition: opacity .22s ease;
+}
+.swap-modal.open .swap-scrim { opacity: 1; }
+
+.swap-sheet {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 560px; max-height: 82vh;
+  display: flex; flex-direction: column;
+  background: #fff; border: 3px solid #fff;
+  border-radius: 26px 26px 0 0;
+  box-shadow: 0 -18px 44px -14px rgba(58, 29, 78, .55);
+  padding: 10px 12px calc(14px + env(safe-area-inset-bottom, 0px));
+  transform: translateY(16px); opacity: 0;
+  transition: transform .24s cubic-bezier(.2, 1.05, .4, 1), opacity .22s ease;
+  will-change: transform, opacity;
+}
+.swap-modal.open .swap-sheet { transform: translateY(0); opacity: 1; }
+
+.sheet-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 6px 6px 10px;
+}
+.sheet-title { font-family: var(--display); font-weight: 800; font-size: 1.15rem; color: var(--ink); }
+.sheet-x {
+  -webkit-appearance: none; appearance: none; cursor: pointer; flex: none;
+  width: 38px; height: 38px; border-radius: 50%; border: none;
+  background: #f0e6f8; color: var(--ink-soft);
+  font-size: 1.5rem; line-height: 1; font-weight: 800; display: grid; place-items: center;
+  transition: background .12s, color .12s, transform .08s;
+}
+.sheet-x:hover { background: #e6d8f3; color: var(--ink); }
+.sheet-x:active { transform: scale(.9); }
+
+.sheet-scroll {
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  display: flex; flex-direction: column; gap: 9px;
+  padding: 4px 4px 6px;
+}
+.qpick-row {
+  -webkit-appearance: none; appearance: none; cursor: pointer; text-align: left; width: 100%;
+  font-family: var(--body); font-weight: 700; font-size: 1.05rem; color: var(--ink);
+  background: #fff; border: 3px solid #efe2f6; border-radius: 16px;
+  padding: 16px; box-shadow: 0 4px 0 #eadff3;
+  transition: background .12s, border-color .12s, transform .08s, box-shadow .08s;
+}
+.qpick-row:hover { background: #faf4ff; border-color: #e2cdf1; }
+.qpick-row:active { transform: translateY(3px); box-shadow: 0 1px 0 #eadff3; }
+/* "✏️ Write my own…" is the first row and stays pinned to the top on scroll. */
+.qpick-row.write-own {
+  position: sticky; top: 0; z-index: 1;
+  background: #fff0f7; border-color: #ffcbe4; color: var(--pink);
+  font-family: var(--display); font-weight: 800; box-shadow: 0 4px 0 #ffd6e7;
+}
+.qpick-row.write-own:hover { background: #ffe4f1; border-color: var(--pink); }
+
+/* Laptop: centered rounded sheet instead of a bottom drawer. */
+@media (min-width: 620px) {
+  .swap-modal { align-items: center; }
+  .swap-sheet {
+    max-width: 460px; max-height: 72vh;
+    border-radius: 26px;
+    box-shadow: 0 26px 60px -16px rgba(58, 29, 78, .6);
+    transform: translateY(20px) scale(.97);
+  }
+  .swap-modal.open .swap-sheet { transform: translateY(0) scale(1); }
+}
+
+/* ---- Editable answer pills (radio ring left · inline text · ✕ delete) ----
+   Structure + selected look come from base.css .opt-pill/.ring/.del; here we
+   make the middle an inline-editable input and reset the ring/list. */
+.opt-list { display: grid; gap: 10px; }
+.opt-pill { cursor: pointer; }
+.opt-pill:hover { border-color: #dcc9f0; }
+.opt-pill .ring { -webkit-appearance: none; appearance: none; cursor: pointer; padding: 0; }
+.opt-pill .opt-txt {
+  -webkit-appearance: none; appearance: none;
+  border: none; background: transparent; outline: none;
+  font: inherit; color: inherit; width: 100%; padding: 2px 0;
+}
+.opt-pill .opt-txt::placeholder { color: #c1aad9; }
+.opt-pill .del { cursor: pointer; }
+.opt-pill .del.gone { display: none; }
+
+/* ---- "＋ Add an Option" (base .add-pill) ---- */
+.add-pill { margin-top: 10px; }
+.add-pill:disabled { opacity: .5; cursor: not-allowed; }
+.add-pill:disabled:hover { background: transparent; border-color: #c7b3e6; color: #9576c4; }
+
+/* ---- Back / Next row (on the purple card) ---- */
+.q-nav { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+.qcard .link-btn { color: #fff; }
+.qcard .link-btn:hover { background: rgba(255, 255, 255, .16); }
+.q-nav .next-btn { flex: 1 1 auto; width: auto; max-width: 300px; margin: 0 0 0 auto; }
+
+/* Roomier controls on wider screens within the shared shell. */
+@media (min-width: 480px) {
+  .opt-pill .opt-txt { font-size: 1.1rem; }
+  .qpick-row { font-size: 1.1rem; }
+}

@@ -1,0 +1,35 @@
+/* leaderboard.css — styles unique to the leaderboard view. Owned by the
+   leaderboard-view agent. Built on the shared .lb-table (red→orange header,
+   purple scores): a white hero heading with the creator's name in a .name-chip,
+   then a ranked table with medal, name + tier, and score/total.
+   Mobile-first and tidy; the table simply grows roomier on laptop via --card-max.
+   Keeps the empty state. */
+
+.lb-view { width: 100%; max-width: var(--card-max); margin-inline: auto; }
+.lb-title { text-align: center; margin: 4px auto 6px; max-width: 20ch; }
+.lb-sub { text-align: center; margin-bottom: 18px; }
+
+/* Ranked rows: left group (medal + name/tier), score on the right. */
+.lb-table .lb-row { gap: 12px; }
+.lb-left { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1; }
+.lb-rank { flex: none; width: 34px; text-align: center; font-family: var(--display); font-weight: 800; font-size: 1.2rem; color: var(--lilac); }
+.lb-who { display: flex; flex-direction: column; min-width: 0; }
+.lb-tier { font-family: var(--body); font-weight: 800; font-size: .74rem; text-transform: uppercase; letter-spacing: .03em; color: var(--grape); }
+.lb-score span { font-size: .58em; color: var(--ink-soft); font-weight: 800; }
+
+/* Podium accents. */
+.lb-row.top1 .lb-rank, .lb-row.top2 .lb-rank, .lb-row.top3 .lb-rank { font-size: 1.4rem; }
+.lb-row.top1 { background: linear-gradient(90deg, #fffdf3, #fff6e6); }
+.lb-row.top1 .lb-name { font-size: 1.18rem; }
+
+/* Empty state. */
+.empty { text-align: center; color: var(--ink-soft); font-weight: 700; padding: 30px 12px 26px; }
+.empty-emoji { font-size: 3.4rem; margin-bottom: 8px; }
+.empty-title { font-family: var(--display); font-weight: 800; font-size: 1.3rem; color: var(--ink); margin-bottom: 6px; }
+.empty-sub { font-size: .98rem; line-height: 1.45; max-width: 34ch; margin: 0 auto; }
+
+/* Give the score column a touch more presence on laptop. */
+@media (min-width: 1024px) {
+  .lb-table .lb-row { padding: 16px 22px; }
+  .lb-score { font-size: 1.3rem; }
+}

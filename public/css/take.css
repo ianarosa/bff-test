@@ -1,0 +1,47 @@
+/* take.css — styles unique to the take-quiz view (owned by the take-view agent).
+   Matches bfftest.fun: a white chunky hero heading with the creator's name in a
+   rainbow .name-chip, a compact white name card with a GREEN "Get Started"
+   button, and a small leaderboard peek underneath. Question steps reuse the
+   shared .opt-pill radio choices (no delete) laid out via the base .opts grid.
+   Mobile-first, single column; options go 2-up on laptop via base .opts. */
+
+/* ---- Name step ---- */
+.take-title { text-align: center; margin: 4px auto 18px; max-width: 18ch; }
+
+.card.namestep { max-width: 520px; text-align: center; }
+.namestep-h {
+  font-family: var(--display); font-weight: 800;
+  font-size: clamp(1.25rem, 4.5vw, 1.6rem);
+  background: linear-gradient(90deg, var(--pink), var(--lilac));
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  margin-bottom: 18px;
+}
+.namestep .field { margin-bottom: 16px; }
+.namestep .btn { margin-top: 2px; }
+
+/* ---- Leaderboard peek under the name card ---- */
+.board-peek { max-width: var(--card-max); margin: 26px auto 0; text-align: center; }
+.board-peek-h {
+  font-family: var(--display); font-weight: 800; color: #fff;
+  font-size: clamp(1.05rem, 3.4vw, 1.35rem); margin-bottom: 12px;
+  text-shadow: 0 2px 0 rgba(150,80,205,.24), 0 8px 18px rgba(88,38,140,.3);
+}
+.board-peek .lb-table { text-align: left; }
+
+/* ---- Question step ---- */
+.step-meta { flex-wrap: wrap; gap: 6px 12px; }
+.step-progress {
+  font-family: var(--display); font-weight: 800; font-size: .8rem;
+  color: var(--pink); background: #ffe4f1; padding: 4px 11px; border-radius: 999px;
+}
+
+/* .opt-pill is a <button> here — normalize appearance & make the whole pill tappable. */
+.qopts .opt-pill { -webkit-appearance: none; appearance: none; cursor: pointer; min-height: 56px; }
+.qopts .opt-pill .opt-txt { overflow-wrap: anywhere; }
+
+/* Long options / a lone choice stay single-column even on wide screens
+   (overrides the base .opts two-up rule at >=720px). */
+@media (min-width: 720px) {
+  .qopts.one-col { grid-template-columns: 1fr; }
+}
