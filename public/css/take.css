@@ -45,3 +45,39 @@
 @media (min-width: 720px) {
   .qopts.one-col { grid-template-columns: 1fr; }
 }
+
+/* ---- Immediate answer feedback (locked pills + reveal) ---- */
+/* Once answered the whole group locks: no hover lift, no pointer on the plain
+   pills; the colored (correct/wrong) pills read as the result, not as buttons. */
+.qopts.locked .opt-pill { cursor: default; pointer-events: none; }
+
+/* CORRECT — friendly mint green (the chosen-right pill and the revealed answer). */
+.qopts .opt-pill.correct {
+  border-color: #16a34a; background: linear-gradient(120deg, #eafaf0, #d8f6e3); color: #14532d;
+  box-shadow: 0 4px 0 #b6ecc9;
+}
+.qopts .opt-pill.correct .ring { border-color: #16a34a; background: #22c55e; box-shadow: inset 0 0 0 4px #fff; }
+
+/* WRONG — the chosen-wrong pill turns red. */
+.qopts .opt-pill.wrong {
+  border-color: #ef4444; background: linear-gradient(120deg, #fdeaea, #fbdcdc); color: #7f1d1d;
+  box-shadow: 0 4px 0 #f3bcbc;
+}
+.qopts .opt-pill.wrong .ring { border-color: #ef4444; background: #ef4444; box-shadow: inset 0 0 0 4px #fff; }
+
+/* Feedback line under the options. */
+.answer-feedback {
+  font-family: var(--display); font-weight: 800; text-align: center;
+  font-size: clamp(1.1rem, 4vw, 1.35rem); margin: 16px 0 4px;
+  animation: fb-pop .35s cubic-bezier(.2,1.2,.4,1) both;
+}
+.answer-feedback.good { color: #16a34a; }
+.answer-feedback.bad { color: #ef4444; }
+@keyframes fb-pop { from { opacity: 0; transform: translateY(6px) scale(.96); } to { opacity: 1; transform: none; } }
+
+/* Next / See-Results button row. */
+.next-row { margin-top: 12px; display: flex; justify-content: center; }
+
+@media (prefers-reduced-motion: reduce) {
+  .answer-feedback { animation: none !important; opacity: 1 !important; transform: none !important; }
+}

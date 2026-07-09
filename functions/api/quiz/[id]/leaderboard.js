@@ -22,12 +22,22 @@ export async function onRequestGet({ params, env }) {
       .bind(id)
       .all();
 
-    const attempts = (results || []).map((r) => ({
-      friendName: r.friend_name,
-      score: r.score,
-      total: r.total,
-      tier: r.tier,
-    }));
+    // One row per friend (best score kept): rows arrive best-first, so keep only
+    // the first row seen per normalized name (earliest attempt on ties).
+    const seen = new Set();
+    const attempts = (results || [])
+      .filter((r) => {
+        const key = String(r.friend_name).trim().toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      })
+      .map((r) => ({
+        friendName: r.friend_name,
+        score: r.score,
+        total: r.total,
+        tier: r.tier,
+      }));
 
     return json({ creatorName: quiz.creator_name, attempts });
   } catch (e) {

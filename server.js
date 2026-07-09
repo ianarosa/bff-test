@@ -112,7 +112,7 @@ async function handleApi(req, res, pathname) {
   }
 
   // Routes under /api/quiz/:id
-  const m = pathname.match(/^\/api\/quiz\/([A-Za-z0-9]+)(\/attempt|\/leaderboard)?$/);
+  const m = pathname.match(/^\/api\/quiz\/([A-Za-z0-9]+)(\/attempt|\/leaderboard|\/check)?$/);
   if (m) {
     const id = m[1];
     const sub = m[2];
@@ -157,6 +157,29 @@ async function handleApi(req, res, pathname) {
         at: Date.now(),
       });
       return sendJson(res, 200, result);
+    }
+
+    // POST /api/quiz/:id/check -> check one guess & reveal that question's answer
+    // (correct pick returned only after the friend commits a guess for it)
+    if (method === 'POST' && sub === '/check') {
+      let body;
+      try {
+        body = await readBody(req);
+      } catch (e) {
+        return sendJson(res, 400, { error: 'Invalid request body' });
+      }
+      const index = body.index;
+      const guess = body.guess;
+      if (!Number.isInteger(index) || index < 0 || index >= quiz.questions.length) {
+        return sendJson(res, 400, { error: 'Invalid selection' });
+      }
+      if (!Number.isInteger(guess) || guess < 0 || guess >= quiz.questions[index].options.length) {
+        return sendJson(res, 400, { error: 'Invalid selection' });
+      }
+      return sendJson(res, 200, {
+        right: guess === quiz.questions[index].answer,
+        correctPick: quiz.questions[index].answer,
+      });
     }
 
     // GET /api/quiz/:id/leaderboard

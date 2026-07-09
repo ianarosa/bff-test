@@ -31,6 +31,11 @@ export function submitAttempt(id, friendName, guesses) {
   return request('POST', '/api/quiz/' + encodeURIComponent(id) + '/attempt', { friendName, guesses });
 }
 
+// POST /api/quiz/:id/check { index, guess } -> { right, correctPick } (reveals one answer)
+export function checkAnswer(id, index, guess) {
+  return request('POST', '/api/quiz/' + encodeURIComponent(id) + '/check', { index, guess });
+}
+
 // GET /api/quiz/:id/leaderboard -> { creatorName, attempts:[{friendName,score,total,tier}] }
 export function getLeaderboard(id) {
   return request('GET', '/api/quiz/' + encodeURIComponent(id) + '/leaderboard');

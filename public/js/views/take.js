@@ -4,7 +4,7 @@
 
 import { esc, toast } from '../main.js';
 import { state, resetAttempt } from '../state.js';
-import { getQuiz, submitAttempt, getLeaderboard } from '../api.js';
+import { getQuiz, submitAttempt, getLeaderboard, checkAnswer } from '../api.js';
 import * as result from './result.js';
 
 const BEAD_EMOJI = ['🩷', '🧡', '💜', '💚', '💙', '🌸', '⭐', '🌈', '🍒', '🦋'];
@@ -42,6 +42,9 @@ export function render(app, id) {
     const attempt = resetAttempt(id);
     attempt.guesses = new Array(total).fill(null);
     const guesses = attempt.guesses;
+    // Parallel to guesses: the revealed correct pick for each answered question,
+    // so navigating Back/forward re-renders it in its locked, revealed state.
+    const reveals = new Array(total).fill(null);
 
     let step = 0; // 0 = name, 1..total = questions
     let name = '';
@@ -72,9 +75,16 @@ export function render(app, id) {
       } else {
         const qi = step - 1;
         const q = questions[qi];
+        const done = guesses[qi] != null; // this question already answered → locked + revealed
         const optsHtml = q.options.map((o, oi) => {
-          const sel = guesses[qi] === oi ? ' sel' : '';
-          return '<button class="opt-pill' + sel + '" data-o="' + oi + '">' +
+          let cls = '';
+          if (done) {
+            if (oi === guesses[qi]) cls += ' sel' + (guesses[qi] === reveals[qi] ? ' correct' : ' wrong');
+            if (oi === reveals[qi]) cls += ' correct';
+          } else if (guesses[qi] === oi) {
+            cls += ' sel';
+          }
+          return '<button class="opt-pill' + cls + '" data-o="' + oi + '">' +
             '<span class="ring"></span><span class="opt-txt">' + esc(o) + '</span></button>';
         }).join('');
         // 2-up on wide screens only when options are short & there are 2+; long
@@ -82,12 +92,23 @@ export function render(app, id) {
         const longOpt = q.options.some((o) => String(o).length > 34);
         const oneCol = longOpt || q.options.length < 2 ? ' one-col' : '';
         const answered = guesses.filter((g) => g != null).length;
+        // Once answered, lock the pills and show the feedback line + Next button.
+        const locked = done ? ' locked' : '';
+        let extra = '';
+        if (done) {
+          const good = guesses[qi] === reveals[qi];
+          extra =
+            '<div class="answer-feedback ' + (good ? 'good' : 'bad') + '">' +
+            (good ? 'Correct! 🎉' : 'Not quite 💔') + '</div>' +
+            '<div class="next-row"><button class="btn mint" id="next">' +
+            (step < total ? 'Next →' : 'See Results 🏆') + '</button></div>';
+        }
         const body =
           '<div class="step-meta"><span class="step-count">Q' + step + ' / ' + total + '</span>' +
           '<span class="step-progress">' + answered + '/' + total + ' answered</span>' +
           '<button class="link-btn" id="back">‹ Back</button></div>' +
           '<div class="qtext">' + esc(q.text) + '</div>' +
-          '<div class="opts qopts' + oneCol + '">' + optsHtml + '</div>';
+          '<div class="opts qopts' + oneCol + locked + '">' + optsHtml + '</div>' + extra;
         app.innerHTML = braceletHTML(guesses) + '<div class="card qcard">' + body + '</div>';
       }
       wire();
@@ -115,21 +136,48 @@ export function render(app, id) {
         input.focus();
       } else {
         const qi = step - 1;
-        Array.prototype.forEach.call(app.querySelectorAll('.opt-pill'), (btn) => {
-          btn.onclick = () => {
-            const oi = +btn.getAttribute('data-o');
-            guesses[qi] = oi;
-            Array.prototype.forEach.call(app.querySelectorAll('.opt-pill'), (b) => b.classList.remove('sel'));
-            btn.classList.add('sel');
-            const bead = app.querySelector('.bead[data-b="' + qi + '"]');
-            if (bead) { bead.className = 'bead b' + (qi % 5) + ' filled'; bead.textContent = BEAD_EMOJI[qi % BEAD_EMOJI.length]; }
-            popBead(qi);
-            setTimeout(() => {
-              if (step < total) { step++; renderStep(); }
-              else { submitAttemptNow(); }
-            }, 280);
+        // Fill the bead for this question and pop it (shared by the answer flow).
+        const fillBead = () => {
+          const bead = app.querySelector('.bead[data-b="' + qi + '"]');
+          if (bead) { bead.className = 'bead b' + (qi % 5) + ' filled'; bead.textContent = BEAD_EMOJI[qi % BEAD_EMOJI.length]; }
+          popBead(qi);
+        };
+        // If already answered, only the Next button + Back are live (pills locked).
+        const nextBtn = document.getElementById('next');
+        if (nextBtn) {
+          nextBtn.onclick = () => {
+            if (step < total) { step++; renderStep(); }
+            else { submitAttemptNow(); }
           };
-        });
+        } else {
+          // Unanswered: first tap locks the pills, checks the guess server-side,
+          // then re-renders into the locked + revealed state.
+          let locked = false;
+          Array.prototype.forEach.call(app.querySelectorAll('.opt-pill'), (btn) => {
+            btn.onclick = () => {
+              if (locked) return;
+              locked = true;
+              const oi = +btn.getAttribute('data-o');
+              Array.prototype.forEach.call(app.querySelectorAll('.opt-pill'), (b) => b.classList.remove('sel'));
+              btn.classList.add('sel');
+              checkAnswer(id, qi, oi).then((res) => {
+                if (!res.ok) {
+                  // Fall back gracefully: record the guess, toast, advance (no reveal).
+                  guesses[qi] = oi;
+                  fillBead();
+                  toast((res.data && res.data.error) || 'Oops 😬');
+                  if (step < total) { step++; renderStep(); }
+                  else { submitAttemptNow(); }
+                  return;
+                }
+                guesses[qi] = oi;
+                reveals[qi] = res.data.correctPick;
+                fillBead();
+                renderStep(); // now locked + colored, with feedback line + Next button
+              });
+            };
+          });
+        }
         document.getElementById('back').onclick = () => { step--; renderStep(); };
       }
     }

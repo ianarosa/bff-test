@@ -9,11 +9,31 @@
 <link rel="stylesheet" href="/css/result.css" />
 <link rel="stylesheet" href="/css/leaderboard.css" />
 
+<!-- AdSense: replace ca-pub-XXXXXXXXXXXXXXXX (2 places) with the real publisher ID and data-ad-slot with the ad-unit slot id from the AdSense dashboard to activate. Guarded push below stays inert while the placeholder id is present. -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
 <div class="doodles" id="doodles" aria-hidden="true"></div>
 <div class="wrap">
   <div id="app"></div>
   <div class="foot">made with 💖 · bff test — local prototype</div>
 </div>
+<div class="ad-banner" aria-label="Advertisement">
+  <span class="ad-label">Advertisement</span>
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="XXXXXXXXXX"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+<script>
+  (function(){
+    var C = 'ca-pub-XXXXXXXXXXXXXXXX';
+    if (C.indexOf('X') === -1) {
+      try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    }
+  })();
+</script>
 <div class="toast" id="toast"></div>
 <canvas id="confetti"></canvas>
 
