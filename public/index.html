@@ -9,8 +9,8 @@
 <link rel="stylesheet" href="/css/result.css" />
 <link rel="stylesheet" href="/css/leaderboard.css" />
 
-<!-- AdSense: replace ca-pub-XXXXXXXXXXXXXXXX (2 places) with the real publisher ID and data-ad-slot with the ad-unit slot id from the AdSense dashboard to activate. Guarded push below stays inert while the placeholder id is present. -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+<!-- AdSense pub ca-pub-3389551593788366. This async loader lives in the app shell (outside the routed #app), so it loads on every page — enabling Auto ads / the persistent anchor banner across all views. The manual <ins> banner below stays inert until a real data-ad-slot is filled in (see guarded push). -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3389551593788366" crossorigin="anonymous"></script>
 
 <div class="doodles" id="doodles" aria-hidden="true"></div>
 <div class="wrap">
@@ -21,16 +21,20 @@
   <span class="ad-label">Advertisement</span>
   <ins class="adsbygoogle"
        style="display:block"
-       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-client="ca-pub-3389551593788366"
        data-ad-slot="XXXXXXXXXX"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
 </div>
 <script>
-  (function(){
-    var C = 'ca-pub-XXXXXXXXXXXXXXXX';
-    if (C.indexOf('X') === -1) {
+  (function () {
+    var CLIENT = 'ca-pub-3389551593788366';
+    var SLOT = 'XXXXXXXXXX';
+    var banner = document.querySelector('.ad-banner');
+    if (CLIENT.indexOf('X') === -1 && SLOT.indexOf('X') === -1) {
       try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
+    } else if (banner) {
+      banner.hidden = true; // keep the manual banner out of view until a real data-ad-slot is set
     }
   })();
 </script>
