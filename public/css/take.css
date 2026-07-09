@@ -25,7 +25,7 @@
 .board-peek-h {
   font-family: var(--display); font-weight: 800; color: #fff;
   font-size: clamp(1.05rem, 3.4vw, 1.35rem); margin-bottom: 12px;
-  text-shadow: 0 2px 0 rgba(150,80,205,.24), 0 8px 18px rgba(88,38,140,.3);
+  text-shadow: 0 2px 0 rgba(90,110,190,.24), 0 8px 18px rgba(40,60,120,.3);
 }
 .board-peek .lb-table { text-align: left; }
 
@@ -33,7 +33,7 @@
 .step-meta { flex-wrap: wrap; gap: 6px 12px; }
 .step-progress {
   font-family: var(--display); font-weight: 800; font-size: .8rem;
-  color: var(--pink); background: #ffe4f1; padding: 4px 11px; border-radius: 999px;
+  color: #0e6b7a; background: #d7f4f2; padding: 4px 11px; border-radius: 999px;
 }
 
 /* .opt-pill is a <button> here — normalize appearance & make the whole pill tappable. */
@@ -68,11 +68,12 @@
 /* Feedback line under the options. */
 .answer-feedback {
   font-family: var(--display); font-weight: 800; text-align: center;
-  font-size: clamp(1.1rem, 4vw, 1.35rem); margin: 16px 0 4px;
+  font-size: clamp(1.05rem, 3.8vw, 1.3rem); margin: 16px auto 4px;
+  width: fit-content; max-width: 100%; padding: 8px 18px; border-radius: 999px;
   animation: fb-pop .35s cubic-bezier(.2,1.2,.4,1) both;
 }
-.answer-feedback.good { color: #16a34a; }
-.answer-feedback.bad { color: #ef4444; }
+.answer-feedback.good { background: #dcfce7; color: #166534; }
+.answer-feedback.bad { background: #fee2e2; color: #991b1b; }
 @keyframes fb-pop { from { opacity: 0; transform: translateY(6px) scale(.96); } to { opacity: 1; transform: none; } }
 
 /* Next / See-Results button row. */

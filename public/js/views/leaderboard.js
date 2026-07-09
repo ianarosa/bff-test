@@ -27,7 +27,7 @@ export function render(app, id) {
         '<div class="card center empty">' +
         '<div class="empty-emoji">🫙</div>' +
         '<div class="empty-title">The board is empty!</div>' +
-        '<div class="empty-sub">No one has taken it yet — share your link to find out who your real ones are. 💌</div>' +
+        '<div class="empty-sub">No one has taken it yet — share your link to find out who your real ones are. 💬</div>' +
         '</div>';
     } else {
       const body = rows.map((a, i) => {
@@ -45,7 +45,7 @@ export function render(app, id) {
     app.innerHTML =
       '<div class="lb-view center">' +
       '<h1 class="lb-title">Who knows <span class="name-chip">' + esc(creator) + '</span> best?</h1>' +
-      '<p class="sub lb-sub">Only the top besties get the crown. 👑</p>' +
+      '<p class="sub lb-sub">Only the ones who really know you get the crown. 👑</p>' +
       list +
       '<div class="btn-row"><button class="btn small" id="take">Take the Test 🔥</button>' +
       '<button class="btn ghost small" id="own">Make Your Own 🎉</button></div>' +

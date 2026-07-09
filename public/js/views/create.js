@@ -109,7 +109,7 @@ export function render(app) {
     if (!q.text.trim()) return 'Give your question some words ✍️';
     if (q.options.length < MIN_OPTS) return 'Need at least 2 answers 🙌';
     if (q.options.some((o) => !o.trim())) return 'Fill in every answer option 📝';
-    if (q.answer == null) return 'Tap YOUR answer to lock it in 💖';
+    if (q.answer == null) return 'Tap YOUR answer to lock it in 🎯';
     return null;
   }
 
@@ -286,7 +286,7 @@ export function render(app) {
     app.innerHTML =
       '<div class="card center">' +
       '<span class="eyebrow">quiz is live! 🎉</span>' +
-      '<h2>Your BFF Test is ready 💌</h2>' +
+      '<h2>Your quiz is ready 🎯</h2>' +
       '<p class="sub">Send this link to your friends. Every guess lands on your leaderboard.</p>' +
       '<div class="linkbox"><code id="lk">' + esc(link) + '</code></div>' +
       '<div style="height:14px"></div>' +

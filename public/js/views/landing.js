@@ -19,20 +19,20 @@ const STEPS = [
 // Decorative topic chips — short, playful, our own labels (static, no nav).
 const TOPICS = [
   'How Well Do You Know Me',
-  'Bestie Trivia',
+  'Guess My Answers',
   'Most Likely To',
   'Friendship IQ',
-  "Who's Your Real BFF",
+  'Do You Really Know Me',
 ];
 
-// Steps for the "How the BFF Test Works" info article (title, text) — original.
+// Steps for the "How It Works" info article (title, text) — original.
 const INFO_STEPS = [
   ['Build your quiz',
    'Answer a handful of questions about yourself — the more "so me" they are, the harder they are to fake.'],
   ['Share it around',
    'Grab your link and drop it in the group chat, your story, or a DM. Anyone with the link can jump in and guess.'],
   ['Watch the leaderboard fill up',
-   'As friends finish, their scores stack up on your board — so you can finally settle who your true bestie is.'],
+   'As friends finish, their scores stack up on your board — so you can finally settle who really knows you best.'],
 ];
 
 // Static footer link labels (decorative).
@@ -79,7 +79,7 @@ export function render(app) {
     // ---- "About this quiz" article (all original copy) ----
     '<div class="info-card">' +
       '<h2 class="info-h">The Ultimate Friendship Quiz</h2>' +
-      '<p class="info-p">A BFF Test is the fun way to find out who <em>actually</em> ' +
+      '<p class="info-p">How Well You Know Me is the fun way to find out who <em>actually</em> ' +
         'pays attention to you. You build a quick quiz about your own quirks — ' +
         'your comfort snack, your dream trip, the song you have on repeat — and ' +
         'every answer becomes a little test of who really knows you.</p>' +
@@ -87,7 +87,7 @@ export function render(app) {
         'watch the scores roll in. No sign-ups, no downloads — just you, your ' +
         'people, and some very revealing results.</p>' +
 
-      '<h2 class="info-h">How the BFF Test Works</h2>' +
+      '<h2 class="info-h">How It Works</h2>' +
       INFO_STEPS.map((s, i) =>
         '<div class="info-step">' +
           '<div class="info-step-num">' + (i + 1) + '</div>' +
@@ -98,9 +98,9 @@ export function render(app) {
         '</div>'
       ).join('') +
 
-      '<p class="info-p">Every quiz is 100% you, so no two BFF Tests are ever ' +
+      '<p class="info-p">Every quiz is 100% you, so no two quizzes are ever ' +
         'the same. Make one in a couple of minutes and see who earns the ' +
-        'bestie crown. 👑</p>' +
+        'know-you-best crown. 👑</p>' +
     '</div>' +
 
     // ---- Site footer (static) ----
@@ -108,7 +108,7 @@ export function render(app) {
       '<div class="footer-links">' +
         FOOTER_LINKS.map((t) => '<span>' + esc(t) + '</span>').join('') +
       '</div>' +
-      '<div class="footer-copy">© 2026 BFF Test · local prototype</div>' +
+      '<div class="footer-copy">© 2026 How Well You Know Me · local prototype</div>' +
     '</footer>';
 
   const input = document.getElementById('name');

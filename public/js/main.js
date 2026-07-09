@@ -33,7 +33,7 @@ export function toast(msg) {
 function initDoodles() {
   const d = document.getElementById('doodles');
   if (!d) return;
-  const set = ['💖', '✨', '🧵', '🌈', '⭐', '🫶', '💛', '🩷', '💫', '🌟'];
+  const set = ['🎯', '✨', '🧵', '🌈', '⭐', '🔍', '💡', '🧩', '💫', '🌟'];
   let html = '';
   for (let i = 0; i < 12; i++) {
     const top = Math.random() * 92;

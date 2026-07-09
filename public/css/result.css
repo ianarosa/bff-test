@@ -4,22 +4,22 @@
    Mobile-first: everything stacks. On laptop the breakdown flows into a
    2-column grid so a long quiz isn't an endless scroll. */
 
-.scorebig { font-family: var(--display); font-weight: 800; font-size: clamp(4rem, 22vw, 6.5rem); line-height: 1; text-align: center; margin: 6px 0 2px; color: var(--pink); text-shadow: 4px 4px 0 var(--tangerine), 8px 8px 0 rgba(58,29,78,.1); }
+.scorebig { font-family: var(--display); font-weight: 800; font-size: clamp(4rem, 22vw, 6.5rem); line-height: 1; text-align: center; margin: 6px 0 2px; color: var(--pink); text-shadow: 4px 4px 0 var(--tangerine), 8px 8px 0 rgba(34,49,79,.1); }
 .scorebig span { color: var(--ink-soft); font-size: .4em; text-shadow: none; }
 .charm { text-align: center; margin: 8px auto 18px; }
-.charm .badge { display: inline-block; font-family: var(--display); font-weight: 800; font-size: 1.15rem; padding: 12px 22px; border-radius: 999px; background: linear-gradient(120deg, var(--tangerine), var(--pink)); color: #fff; box-shadow: 0 8px 0 rgba(214,43,129,.35), 0 14px 26px -10px rgba(214,43,129,.6); transform: rotate(-2deg); }
+.charm .badge { display: inline-block; font-family: var(--display); font-weight: 800; font-size: 1.15rem; padding: 12px 22px; border-radius: 999px; background: linear-gradient(120deg, var(--tangerine), var(--pink)); color: #fff; box-shadow: 0 8px 0 rgba(20,184,201,.35), 0 14px 26px -10px rgba(20,184,201,.6); transform: rotate(-2deg); }
 
 .result-sub { margin-bottom: 4px; }
 
 .breakdown { text-align: left; display: grid; grid-template-columns: 1fr; gap: 12px; margin: 22px 0 6px; }
-.brow { background: #fff; border: 3px solid #f0e6f8; border-radius: 16px; padding: 12px 14px; }
+.brow { background: #fff; border: 3px solid #e6ebf5; border-radius: 16px; padding: 12px 14px; }
 .brow .bq { font-family: var(--display); font-weight: 800; font-size: .95rem; display: flex; gap: 8px; align-items: flex-start; }
 .brow .bmark { flex: none; font-size: 1.1rem; }
 .brow .bq span:last-child { min-width: 0; overflow-wrap: anywhere; }
 .brow .bans { margin-top: 8px; font-size: .9rem; font-weight: 700; line-height: 1.5; display: flex; flex-wrap: wrap; gap: 6px; }
 .brow .pill { display: inline-block; padding: 3px 9px; border-radius: 999px; font-weight: 800; font-size: .82rem; max-width: 100%; overflow-wrap: anywhere; }
-.brow .pill.you { background: #ffe4f1; color: var(--pink); }
-.brow .pill.real { background: #dff7ee; color: #1ba883; }
+.brow .pill.you { background: #e6ebf5; color: #334155; }
+.brow .pill.real { background: #dff7ee; color: #0f7a4e; }
 .brow.right { border-color: #bff0dd; background: #f4fdf9; }
 .brow.wrong { border-color: #ffd4d4; background: #fff6f6; }
 

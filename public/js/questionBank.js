@@ -71,7 +71,7 @@ export const ALTERNATES = [
     options: ['Pepperoni classic 🥩', 'Pineapple, fight me 🍍', 'Loaded veggies 🥬', 'Extra cheese only 🧀'],
   },
   {
-    text: "What's my love language? 💞",
+    text: "What's my love language? 💫",
     options: ['Words of affirmation 💬', 'Quality time ⏳', 'Gifts 🎁', 'Physical touch 🤗'],
   },
   {

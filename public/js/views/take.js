@@ -7,7 +7,7 @@ import { state, resetAttempt } from '../state.js';
 import { getQuiz, submitAttempt, getLeaderboard, checkAnswer } from '../api.js';
 import * as result from './result.js';
 
-const BEAD_EMOJI = ['🩷', '🧡', '💜', '💚', '💙', '🌸', '⭐', '🌈', '🍒', '🦋'];
+const BEAD_EMOJI = ['🔵', '🧡', '💜', '💚', '💙', '🟢', '⭐', '🌈', '🍒', '🦋'];
 
 // Shown when the quiz id doesn't resolve.
 function renderNotFound(app) {
@@ -183,7 +183,7 @@ export function render(app, id) {
     }
 
     function submitAttemptNow() {
-      app.innerHTML = '<div class="spin">scoring your bestie-ness… 🧮</div>';
+      app.innerHTML = '<div class="spin">scoring how well you know them… 🧮</div>';
       submitAttempt(id, attempt.friendName, guesses).then((res) => {
         if (!res.ok) { toast((res.data && res.data.error) || 'Oops 😬'); render(app, id); return; }
         result.render(app, {

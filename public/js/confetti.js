@@ -9,7 +9,7 @@ export function launchConfetti(scale) {
   const ctx = canvas.getContext('2d');
   const W = (canvas.width = window.innerWidth);
   const H = (canvas.height = window.innerHeight);
-  const emojis = ['💖', '✨', '🎉', '⭐', '🩷', '💛', '🌈', '🫶'];
+  const emojis = ['🎯', '✨', '🎉', '⭐', '🧩', '💛', '🌈', '💫'];
   const count = Math.floor(70 * (scale || 1));
   const parts = [];
   for (let i = 0; i < count; i++) {
