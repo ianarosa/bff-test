@@ -282,7 +282,26 @@ export function render(app) {
   }
 
   function showShare(id) {
-    const link = location.origin + '/#/q/' + id;
+    // Shareable link is a REAL PATH (not a #hash) so social apps can crawl it for
+    // a preview card. In-app navigation below still uses location.hash on purpose.
+    const link = location.origin + '/q/' + id;
+
+    // Native share sheet (phone) → one tap to WhatsApp/Instagram/Messages.
+    // On desktop (no navigator.share) it degrades to copying the link.
+    function nativeShare() {
+      const shareData = {
+        title: 'How Well You Know Me',
+        text: 'Think you know me? Take my quiz and find out how well you really do 🎯',
+        url: link,
+      };
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {}); // user cancel / not-allowed: silently ignore
+      } else {
+        copyText(link);
+        toast('Link copied — paste it to your friends! 📋');
+      }
+    }
+
     app.innerHTML =
       '<div class="card center">' +
       '<span class="eyebrow">quiz is live! 🎉</span>' +
@@ -290,11 +309,13 @@ export function render(app) {
       '<p class="sub">Send this link to your friends. Every guess lands on your leaderboard.</p>' +
       '<div class="linkbox"><code id="lk">' + esc(link) + '</code></div>' +
       '<div style="height:14px"></div>' +
-      '<button class="btn" id="copy">Copy Link 🔗</button>' +
+      '<button class="btn" id="share">Share 📲</button>' +
       '<div class="btn-row">' +
-      '<button class="btn alt small" id="board">Leaderboard 🏆</button>' +
+      '<button class="btn alt small" id="copy">Copy Link 🔗</button>' +
+      '<button class="btn ghost small" id="board">Leaderboard 🏆</button>' +
       '<button class="btn ghost small" id="try">Preview 👀</button>' +
       '</div></div>';
+    document.getElementById('share').onclick = nativeShare;
     document.getElementById('copy').onclick = () => copyText(link);
     document.getElementById('board').onclick = () => { location.hash = '#/q/' + id + '/board'; };
     document.getElementById('try').onclick = () => { location.hash = '#/q/' + id; };
