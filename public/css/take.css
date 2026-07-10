@@ -20,6 +20,13 @@
 .namestep .field { margin-bottom: 16px; }
 .namestep .btn { margin-top: 2px; }
 
+/* Social-proof play count under the take-quiz title (on the gradient). */
+.play-count {
+  text-align: center; color: #fff; font-family: var(--display); font-weight: 800;
+  font-size: clamp(.95rem, 3vw, 1.15rem); margin: -6px auto 20px;
+  text-shadow: 0 2px 0 rgba(90,110,190,.24), 0 8px 18px rgba(40,60,120,.3);
+}
+
 /* ---- Leaderboard peek under the name card ---- */
 .board-peek { max-width: var(--card-max); margin: 26px auto 0; text-align: center; }
 .board-peek-h {

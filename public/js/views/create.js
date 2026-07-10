@@ -19,7 +19,7 @@
 import { esc, toast } from '../main.js';
 import { state, resetDraft } from '../state.js';
 import { DEFAULT_QUESTIONS, ALTERNATES } from '../questionBank.js';
-import { createQuiz } from '../api.js';
+import { createQuiz, getLeaderboard } from '../api.js';
 
 const MIN_OPTS = 2;
 const MAX_OPTS = 6;
@@ -308,6 +308,7 @@ export function render(app) {
       '<h2>Your quiz is ready 🎯</h2>' +
       '<p class="sub">Send this link to your friends. Every guess lands on your leaderboard.</p>' +
       '<div class="linkbox"><code id="lk">' + esc(link) + '</code></div>' +
+      '<p class="sub play-note" id="playnote" style="margin-top:10px"></p>' +
       '<div style="height:14px"></div>' +
       '<button class="btn" id="share">Share 📲</button>' +
       '<div class="btn-row">' +
@@ -319,6 +320,16 @@ export function render(app) {
     document.getElementById('copy').onclick = () => copyText(link);
     document.getElementById('board').onclick = () => { location.hash = '#/q/' + id + '/board'; };
     document.getElementById('try').onclick = () => { location.hash = '#/q/' + id; };
+
+    // live play count for social proof
+    getLeaderboard(id).then((lb) => {
+      const n = (lb.ok && Array.isArray(lb.data.attempts)) ? lb.data.attempts.length : 0;
+      const note = document.getElementById('playnote');
+      if (!note) return;
+      note.textContent = n === 0
+        ? 'No plays yet — send it around 🚀'
+        : '🔥 ' + n + ' ' + (n === 1 ? 'person has' : 'people have') + ' played';
+    });
   }
 
   function copyText(text) {

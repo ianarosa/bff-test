@@ -66,6 +66,9 @@ export function render(app, id) {
       if (step === 0) {
         app.innerHTML =
           '<h1 class="take-title">How Well Do You Really Know <span class="name-chip">' + esc(creator) + '</span>?</h1>' +
+          (board.length
+            ? '<div class="play-count">🔥 ' + board.length + ' ' + (board.length === 1 ? 'person has' : 'people have') + ' played</div>'
+            : '') +
           '<div class="card center namestep">' +
           '<div class="namestep-h">What is your name? 👥</div>' +
           '<input class="field" id="nm" maxlength="40" placeholder="Type your name here…" value="' + esc(name) + '" />' +
