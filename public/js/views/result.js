@@ -30,8 +30,8 @@ export function render(app, resultData) {
     '<div class="charm"><span class="badge">' + esc(tier) + '</span></div>' +
     '<p class="sub result-sub">Here\'s how you did on knowing <span class="name-chip">' + esc(creator) + '</span> 👇</p>' +
     '<div class="breakdown">' + bd + '</div>' +
+    '<button class="btn" id="share">Share my score 📲</button>' +
     '<div class="btn-row">' +
-    '<button class="btn small" id="share">Share my score 📲</button>' +
     '<button class="btn alt small" id="board">Leaderboard 🏆</button>' +
     '<button class="btn mint small" id="own">Make Your Own 🎉</button>' +
     '</div></div>';

@@ -108,7 +108,7 @@ export function render(app) {
       '<div class="footer-links">' +
         FOOTER_LINKS.map((t) => '<span>' + esc(t) + '</span>').join('') +
       '</div>' +
-      '<div class="footer-copy">© 2026 How Well You Know Me · local prototype</div>' +
+      '<div class="footer-copy">© 2026 How Well You Know Me</div>' +
     '</footer>';
 
   const input = document.getElementById('name');
