@@ -422,6 +422,11 @@ h2 {
   max-height: calc(100px + env(safe-area-inset-bottom, 0px));
 }
 .ad-banner:empty { display: none; }
+/* Keep the anchored bar hidden until AdSense actually fills it, so visitors
+   never see an empty "Advertisement" strip (e.g. before site approval). */
+.ad-banner { display: none; }
+.ad-banner:has(.adsbygoogle[data-ad-status="filled"]) { display: block; }
+@supports not selector(:has(*)) { .ad-banner { display: block; } }
 .ad-label {
   display: block;
   font-family: var(--body); font-weight: 700;
