@@ -419,6 +419,7 @@ h2 {
   box-shadow: 0 -6px 22px -10px rgba(30, 50, 110, .35);
   text-align: center;
   overflow: hidden;
+  max-height: calc(100px + env(safe-area-inset-bottom, 0px));
 }
 .ad-banner:empty { display: none; }
 .ad-label {
