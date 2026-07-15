@@ -1,0 +1,197 @@
+/* page.css — the static content pages (about, questions, guide, privacy,
+   terms). Everything the app's views don't need: a nav bar and footer that
+   ride directly on the gradient, plus a wider, left-aligned article card with
+   real long-form typography inside it. Reuses base.css's tokens end to end —
+   Poppins headings, Nunito copy, the white rounded card, teal/indigo accents.
+   Only the .page-* classes and copy inside .card.page are styled here;
+   body / .wrap / the generic .card stay exactly as base.css left them. */
+
+/* ---- Nav: rides on the gradient, so white chunky text like the hero ---- */
+.page-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto clamp(16px, 3vw, 26px);
+}
+
+.page-logo {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1rem, 3.2vw, 1.15rem);
+  line-height: 1.2;
+  color: #fff;
+  text-decoration: none;
+  letter-spacing: -.01em;
+  text-shadow: 0 2px 0 rgba(90, 110, 190, .26), 0 8px 18px rgba(40, 60, 120, .32);
+  padding: 8px 2px;
+  transition: transform .12s ease, filter .12s ease;
+}
+.page-logo:hover { transform: translateY(-1px); filter: brightness(1.06); }
+
+.page-links {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.page-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: .88rem;
+  line-height: 1;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, .18);
+  border: 1px solid rgba(255, 255, 255, .3);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  text-shadow: 0 1px 6px rgba(30, 50, 110, .2);
+  transition: background .14s ease, border-color .14s ease, transform .12s ease;
+}
+.page-links a:hover {
+  background: rgba(255, 255, 255, .34);
+  border-color: rgba(255, 255, 255, .55);
+  transform: translateY(-1px);
+}
+
+/* ---- The article card: wider than an app card, and read left to right ---- */
+.card.page {
+  max-width: 760px;
+  text-align: left;
+  color: var(--ink);
+}
+
+/* ---- Long-form typography ---- */
+.page-h1 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 5.6vw, 2.6rem);
+  line-height: 1.08;
+  letter-spacing: -.015em;
+  color: var(--ink);
+  text-shadow: none;
+  margin: 0 0 10px;
+}
+
+.page-lead {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: clamp(1.05rem, 2.6vw, 1.18rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 6px;
+}
+
+.page-h2 {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 3.6vw, 1.6rem);
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  color: var(--ink);
+  text-shadow: none;
+  margin: clamp(30px, 5vw, 42px) 0 12px;
+}
+
+.card.page p,
+.card.page li {
+  font-family: var(--body);
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #4d5b76;
+}
+.card.page p { margin: 0 0 16px; }
+.card.page p:last-child { margin-bottom: 0; }
+
+.card.page ul,
+.card.page ol {
+  margin: 0 0 18px;
+  padding-left: 1.45em;
+}
+.card.page ul { list-style: disc; }
+.card.page ol { list-style: decimal; }
+.card.page li { margin-bottom: 10px; padding-left: 4px; }
+.card.page li:last-child { margin-bottom: 0; }
+.card.page li::marker {
+  color: var(--pink);
+  font-family: var(--display);
+  font-weight: 800;
+}
+.card.page ol li::marker { color: var(--grape); }
+.card.page li > ul,
+.card.page li > ol { margin: 10px 0 0; }
+
+.card.page a {
+  color: var(--grape);
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  text-decoration-color: rgba(63, 87, 201, .35);
+  transition: color .12s ease, text-decoration-color .12s ease;
+}
+.card.page a:hover {
+  color: var(--pink);
+  text-decoration-color: currentColor;
+}
+
+.card.page strong { color: var(--ink); font-weight: 800; }
+
+/* ---- End-of-article CTA: soft teal→indigo wash panel ---- */
+.page-cta {
+  margin: clamp(30px, 5vw, 42px) 0 0;
+  padding: clamp(20px, 4vw, 30px) clamp(18px, 4vw, 28px);
+  border-radius: 20px;
+  background: linear-gradient(120deg, #e6faf8, #eaeeff);
+  border: 1px solid rgba(91, 110, 225, .14);
+  box-shadow: 0 10px 24px -18px rgba(35, 50, 90, .5);
+  text-align: center;
+  color: var(--ink);
+}
+.card.page .page-cta p { color: var(--ink); margin-bottom: 0; }
+.card.page .page-cta p + p { margin-top: 10px; }
+
+/* ---- Footer: back on the gradient, translucent white ---- */
+.page-foot {
+  width: 100%;
+  max-width: 760px;
+  margin: clamp(22px, 4vw, 34px) auto 0;
+  text-align: center;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: .85rem;
+  line-height: 2.1;
+  color: rgba(255, 255, 255, .78);
+  text-shadow: 0 1px 6px rgba(30, 50, 110, .2);
+}
+.page-foot a {
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, .45);
+  text-underline-offset: 3px;
+  padding: 6px 4px;
+  transition: text-decoration-color .12s ease, opacity .12s ease;
+}
+.page-foot a:hover { text-decoration-color: #fff; opacity: .9; }
+
+.page-copy {
+  margin-top: 10px;
+  font-size: .76rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .58);
+}
+
+@media (min-width: 1024px) {
+  .card.page p,
+  .card.page li { font-size: 1.05rem; }
+}

@@ -35,8 +35,14 @@ const INFO_STEPS = [
    'As friends finish, their scores stack up on your board — so you can finally settle who really knows you best.'],
 ];
 
-// Static footer link labels (decorative).
-const FOOTER_LINKS = ['How It Works', 'Make a Quiz', 'About'];
+// Site footer links (real pages, crawlable — also the nav Google expects).
+const FOOTER_LINKS = [
+  ['/about', 'About'],
+  ['/questions', 'Questions'],
+  ['/friendship-quiz-guide', 'Guide'],
+  ['/privacy', 'Privacy'],
+  ['/terms', 'Terms'],
+];
 
 export function render(app) {
   app.innerHTML =
@@ -106,7 +112,7 @@ export function render(app) {
     // ---- Site footer (static) ----
     '<footer class="site-footer">' +
       '<div class="footer-links">' +
-        FOOTER_LINKS.map((t) => '<span>' + esc(t) + '</span>').join('') +
+        FOOTER_LINKS.map((l) => '<a href="' + l[0] + '">' + esc(l[1]) + '</a>').join('') +
       '</div>' +
       '<div class="footer-copy">© 2026 How Well You Know Me</div>' +
     '</footer>';

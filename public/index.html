@@ -28,8 +28,103 @@
 
 <div class="doodles" id="doodles" aria-hidden="true"></div>
 <div class="wrap">
-  <div id="app"></div>
-  <div class="foot">made with 💛 · knowsme.fun</div>
+  <!--
+    NO-JS / CRAWLER FALLBACK. #app is filled by JavaScript at runtime, so without
+    this block a crawler (or an AdSense reviewer) that doesn't execute JS sees an
+    empty page and reads the site as "under construction" / low-value.
+
+    The markup below MIRRORS the real landing view in /js/views/landing.js — same
+    headline, tagline, How It Works steps, topic chips, and "The Ultimate
+    Friendship Quiz" article copy — using that view's own classes so it looks
+    right if it ever flashes. On boot, main.js routes to landing.render(app),
+    which overwrites app.innerHTML and replaces everything in here.
+
+    KEEP THE TWO IN SYNC: if the landing copy changes in landing.js, change it
+    here too. (The name field + START QUIZ button are deliberately omitted — they
+    do nothing without JS.)
+  -->
+  <div id="app">
+    <section class="center">
+      <h1>Who Really Knows You? 👀</h1>
+      <p class="sub">Create a friendship quiz &amp; expose your friends!</p>
+    </section>
+
+    <h2 class="center" style="margin-top:14px">How It Works 👇</h2>
+    <div style="display:grid;gap:14px;max-width:var(--card-max);margin:14px auto 8px">
+      <div class="howto-card teal">
+        <div class="howto-ico">✨</div>
+        <div>
+          <div class="howto-title">Create Your Quiz</div>
+          <div class="howto-sub">Answer questions about yourself!</div>
+        </div>
+      </div>
+      <div class="howto-card peach">
+        <div class="howto-ico">🚀</div>
+        <div>
+          <div class="howto-title">Share with Friends</div>
+          <div class="howto-sub">Send your quiz link and challenge them!</div>
+        </div>
+      </div>
+      <div class="howto-card pink">
+        <div class="howto-ico">👀</div>
+        <div>
+          <div class="howto-title">See the Results</div>
+          <div class="howto-sub">Find out who actually knows you best!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="topic-chips">
+      <span class="topic-chip">How Well Do You Know Me</span>
+      <span class="topic-chip">Guess My Answers</span>
+      <span class="topic-chip">Most Likely To</span>
+      <span class="topic-chip">Friendship IQ</span>
+      <span class="topic-chip">Do You Really Know Me</span>
+    </div>
+
+    <div class="info-card">
+      <h2 class="info-h">The Ultimate Friendship Quiz</h2>
+      <p class="info-p">How Well You Know Me is the fun way to find out who <em>actually</em> pays attention to you. You build a quick quiz about your own quirks — your comfort snack, your dream trip, the song you have on repeat — and every answer becomes a little test of who really knows you.</p>
+      <p class="info-p">Share your link anywhere, let your friends guess, and watch the scores roll in. No sign-ups, no downloads — just you, your people, and some very revealing results.</p>
+
+      <h2 class="info-h">How It Works</h2>
+      <div class="info-step">
+        <div class="info-step-num">1</div>
+        <div class="info-step-body">
+          <div class="info-step-title">Build your quiz</div>
+          <div class="info-step-text">Answer a handful of questions about yourself — the more "so me" they are, the harder they are to fake.</div>
+        </div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">2</div>
+        <div class="info-step-body">
+          <div class="info-step-title">Share it around</div>
+          <div class="info-step-text">Grab your link and drop it in the group chat, your story, or a DM. Anyone with the link can jump in and guess.</div>
+        </div>
+      </div>
+      <div class="info-step">
+        <div class="info-step-num">3</div>
+        <div class="info-step-body">
+          <div class="info-step-title">Watch the leaderboard fill up</div>
+          <div class="info-step-text">As friends finish, their scores stack up on your board — so you can finally settle who really knows you best.</div>
+        </div>
+      </div>
+
+      <p class="info-p">Every quiz is 100% you, so no two quizzes are ever the same. Make one in a couple of minutes and see who earns the know-you-best crown. 👑</p>
+    </div>
+
+    <footer class="site-footer">
+      <div class="footer-links">
+        <a href="/about">About</a>
+        <a href="/questions">Questions</a>
+        <a href="/friendship-quiz-guide">Guide</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </div>
+      <div class="footer-copy">© 2026 How Well You Know Me</div>
+    </footer>
+  </div>
+  <div class="foot"><a href="/about">About</a> · <a href="/questions">Questions</a> · <a href="/friendship-quiz-guide">Guide</a> · <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a><br />made with 💛 · knowsme.fun</div>
 </div>
 <div class="ad-banner" aria-label="Advertisement">
   <span class="ad-label">Advertisement</span>
