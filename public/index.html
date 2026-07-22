@@ -134,7 +134,6 @@
        data-ad-slot="1810288573"
        data-ad-format="horizontal"
        data-full-width-responsive="true"></ins>
-  <span class="ad-status" id="adstatus"></span>
 </div>
 <script>
   (function () {
@@ -143,15 +142,6 @@
     var banner = document.querySelector('.ad-banner');
     if (CLIENT.indexOf('X') === -1 && SLOT.indexOf('X') === -1) {
       try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch (e) {}
-      setTimeout(function () {
-        var ins = document.querySelector('.ad-banner .adsbygoogle');
-        var out = document.getElementById('adstatus');
-        if (!ins || !out) return;
-        var s = ins.getAttribute('data-ad-status');
-        if (s === 'filled') out.textContent = '✓ ad served';
-        else if (s === 'unfilled') out.textContent = 'no ad to show right now';
-        else out.textContent = 'ad slot ready · waiting for an ad';
-      }, 4000);
     } else if (banner) {
       banner.hidden = true; // keep the manual banner out of view until a real data-ad-slot is set
     }

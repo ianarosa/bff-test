@@ -430,9 +430,14 @@ h2 {
   color: rgba(34, 49, 79, .42);
   margin: 0 0 2px;
 }
-.ad-status { display: block; font-family: var(--body); font-weight: 700; font-size: .5rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(34,49,79,.38); margin-top: 1px; }
 .ad-banner .adsbygoogle {
   display: block; width: 100%;
   max-width: 970px; margin: 0 auto;
   height: clamp(50px, 13vw, 90px);
 }
+/* The anchored ad only shows on content screens. The interactive quiz
+   screens set body.hide-ads (see router.js) so no ad appears on a
+   non-content screen, and the bottom padding reserved for the bar is
+   reclaimed. */
+body.hide-ads .ad-banner { display: none; }
+body.hide-ads .wrap { padding-bottom: clamp(64px, 8vw, 96px); }

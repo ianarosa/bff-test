@@ -14,6 +14,7 @@ import * as leaderboard from './views/leaderboard.js';
 export function route() {
   const app = document.getElementById('app');
   const h = location.hash.replace(/^#/, '');
+  document.body.classList.toggle('hide-ads', !(h === '' || h === '/'));
   let m;
   if (!h || h === '/') return landing.render(app);
   if (h === '/create') return create.render(app);
